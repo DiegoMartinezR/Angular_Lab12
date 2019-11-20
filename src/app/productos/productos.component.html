@@ -1,0 +1,66 @@
+<div class="m-5">
+  <div class="row">
+    <div class="col-sm-8 col-md-8">
+      <div class="card">
+        <div class="card-body p-0">
+          <h3 class="text-center text-primary my-3">Administración de artículos</h3>
+
+          <table *ngIf="hayRegistros(); else sinproductos" class="table mb-0 table-striped table-dark">
+            <tr>
+              <td>Codigo</td>
+              <td>Nombre</td>
+              <td>Precio</td>
+              <td>Imagen</td>
+              <td></td>
+            </tr>
+            <tr *ngFor="let producto of lista">
+              <td>{{producto.codigo}}</td>
+              <td>{{producto.descripcion}}</td>
+              <td>{{producto.precio}}</td>
+              <td><img src="{{'http://localhost:3000/images/' + producto.image}}" width="50" height="50px" alt=""></td>
+              <td> 
+                <button (click)="eliminar(producto.codigo)"
+                  class="btn btn-danger btn-sm p-1 mr-1"><small>DELETE</small></button>
+                <button (click)="mostrar(producto.codigo)"
+                  class="btn btn-primary btn-sm p-1 ml-1"><small>EDITAR</small></button>
+              </td>
+            </tr>
+          </table>
+          <ng-template #sinproductos>
+            <h4 class="text-center text-info my-5">No hay productos</h4>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-4 col-md-4">
+      <div class="card">
+        <div class="card-body">
+          <form action="/" enctype="multipart/form-data" method="post">
+            <div class="form-group">
+              <label for="descripcion">Descripcion</label>
+              <input type="text" class="form-control" [(ngModel)]="prod.descripcion "
+                [ngModelOptions]="{standalone: true}" />
+            </div>
+            <div class="form-group">
+              <label for="Precio">Precio</label>
+              <input type="number" class="form-control" [(ngModel)]="prod.precio"
+                [ngModelOptions]="{standalone: true}" />
+            </div>
+            <div class="form-group">
+              <label for="Imagen">Imagen</label>
+              <div class="custom-file">
+                <input type="file" class="custom-file-input" id="customFileLangHTML" accept="image/*"
+                  (change)="onfileselected($event)">
+                <label class="custom-file-label" for="customFileLangHTML" data-browse="Imagen">Seleccione</label>
+              </div>
+            </div>
+            <div class="my-5">
+              <button class="btn btn-outline-success mr-2 btn-sm" (click)="nuevo()">Guardar</button>
+              <button class="btn btn-outline-success ml-2 btn-sm" (click)="actualizar()">Actualizar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
